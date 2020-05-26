@@ -19,8 +19,12 @@ namespace MainGameProject.Combinations
         FourKind
     }
 
+    /// <summary>
+    /// Class used to evaluate the value of final cards at the end of the game
+    /// </summary>
     class HandValue
     {
+        // the result of evaluating hand
         public COMBINATION Combination { get; set; }
         public int Total { get; set; }
         public int HighCard { get; set; }
@@ -31,6 +35,9 @@ namespace MainGameProject.Combinations
         public int SpadesSum { get; private set; }
         public List<Card> Cards { get; private set; }
 
+        /// <summary>
+        /// Calculates number of each suit in the final hand 
+        /// </summary>
         private void getNumberOfSuit()
         {
             foreach (Card card in Cards)
@@ -46,6 +53,10 @@ namespace MainGameProject.Combinations
             }
         }
 
+        /// <summary>
+        /// Sets up the cards and prepares class for usage in evaluation rules
+        /// </summary>
+        /// <param name="cards">The cards to put in the class for further evaluation</param>
         public HandValue(List<Card> cards)
         {
             Cards = cards;
