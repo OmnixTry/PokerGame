@@ -20,6 +20,9 @@ namespace MainGameProject.Cards
         EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE
     }
 
+    /// <summary>
+    /// Card for a poker game
+    /// </summary>
     class Card
     {
         private readonly SUIT suit;

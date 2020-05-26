@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace MainGameProject.Cards
 {
+    /// <summary>
+    /// Represents deck in the poker game
+    /// </summary>
     class Deck
     {
+        // the cards of the deck
         private List<Card> cards;
         
         public Deck(List<Card> cds)
@@ -15,6 +19,9 @@ namespace MainGameProject.Cards
             cards = cds;
         }
         
+        /// <summary>
+        /// Shuffles the deck
+        /// </summary>
         public void ShuffleDeck()
         {
             Random rand = new Random();
@@ -34,6 +41,10 @@ namespace MainGameProject.Cards
             }
         }
 
+        /// <summary>
+        /// Draw a top card of the deck
+        /// </summary>
+        /// <returns></returns>
         public Card Pop()
         {
             Card toRemove = cards.First();
