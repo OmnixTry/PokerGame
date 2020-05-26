@@ -12,17 +12,30 @@ namespace MainGameProject.Cards
     class Deck
     {
         // the cards of the deck
-        private List<Card> cards;
+        private List<Card> _cards;
         
-        public Deck(List<Card> cds)
+        public Deck(List<Card> cards)
         {
-            cards = cds;
+            _cards = cards;
         }
         
         /// <summary>
+        /// Creates brand new deck and shuffles it
+        /// </summary>
+        public Deck()
+        {
+            _cards = new List<Card>();
+            foreach (SUIT s in Enum.GetValues(typeof(SUIT)))
+                foreach (VALUE v in Enum.GetValues(typeof(VALUE)))
+                    _cards.Add(new Card(s, v));
+
+            this.Shuffle();
+        }
+
+        /// <summary>
         /// Shuffles the deck
         /// </summary>
-        public void ShuffleDeck()
+        public void Shuffle()
         {
             Random rand = new Random();
             Card temp;
@@ -30,13 +43,13 @@ namespace MainGameProject.Cards
             //run the shuffle 1000 times
             for (int shuffleTimes = 0; shuffleTimes < 1000; shuffleTimes++)
             {
-                for (int i = 0; i < cards.Count; i++)
+                for (int i = 0; i < _cards.Count; i++)
                 {
                     //swap the cards
                     int secondCardIndex = rand.Next(13);
-                    temp = cards[i];
-                    cards[i] = cards[secondCardIndex];
-                    cards[secondCardIndex] = temp;
+                    temp = _cards[i];
+                    _cards[i] = _cards[secondCardIndex];
+                    _cards[secondCardIndex] = temp;
                 }
             }
         }
@@ -47,8 +60,8 @@ namespace MainGameProject.Cards
         /// <returns></returns>
         public Card Pop()
         {
-            Card toRemove = cards.First();
-            cards.RemoveAt(0);
+            Card toRemove = _cards.First();
+            _cards.RemoveAt(0);
             return toRemove;
         }
     }
