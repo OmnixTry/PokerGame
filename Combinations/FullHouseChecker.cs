@@ -72,6 +72,7 @@ namespace MainGameProject.Combinations
                 Cards.Card topCard = handValue.Cards.Except(pair).Except(tripple).OrderByDescending(x => x.Value).First();
                 handValue.Combination = COMBINATION.FullHouse;
                 handValue.HighCard = (int)topCard.Value;
+                return;
             }
 
             if (_nextChecker != null)

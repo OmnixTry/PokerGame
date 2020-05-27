@@ -18,14 +18,14 @@ namespace MainGameProject.Combinations
                 handValue.Total = (int)handValue.Cards[3].Value * 4;
                 handValue.HighCard = (int)handValue.Cards[6].Value;
                 handValue.Combination = COMBINATION.FourKind;
-                //return handValue;
+                return;
             }
             else if (handValue.Cards[3].Value == handValue.Cards[4].Value && handValue.Cards[3].Value == handValue.Cards[5].Value && handValue.Cards[3].Value == handValue.Cards[6].Value)
             {
                 handValue.Total = (int)handValue.Cards[3].Value * 4;
                 handValue.HighCard = (int)handValue.Cards[2].Value;
                 handValue.Combination = COMBINATION.FourKind;
-                //return handValue;
+                return;
             }
 
             if (_nextChecker != null)
