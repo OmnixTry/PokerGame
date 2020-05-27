@@ -15,6 +15,6 @@ namespace MainGameProject.Combinations
             _nextChecker = next;
         }
 
-        public abstract HandValue CheckCombination(HandValue handValue);
+        public abstract void CheckCombination(HandValue handValue);
     }
 }
