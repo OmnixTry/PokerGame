@@ -38,7 +38,7 @@ namespace MainGameProject.Combinations
         /// <summary>
         /// Calculates number of each suit in the final hand 
         /// </summary>
-        private void getNumberOfSuit()
+        private void GetNumberOfSuit()
         {
             foreach (Card card in Cards)
             {
@@ -60,7 +60,7 @@ namespace MainGameProject.Combinations
         public HandValue(List<Card> cards)
         {
             Cards = cards;
-            getNumberOfSuit();
+            GetNumberOfSuit();
             SortCards();
         }
 

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainGameProject
+namespace MainGameProject.Combinations
 {
     interface ICombinationChecker
     {
         void SetNext(ICombinationChecker nextHandler);
-        HandValue CheckCombination();
+        HandValue CheckCombination(HandValue handValue);
     }
 }
