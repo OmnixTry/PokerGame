@@ -61,6 +61,26 @@ namespace MainGameProject.Combinations
         {
             Cards = cards;
             getNumberOfSuit();
+            SortCards();
+        }
+
+        /// <summary>
+        /// Sorts cards in the deck to make defining combinations esier
+        /// </summary>
+        private void SortCards()
+        {
+            // sorting using Linq
+            var sorting = from c in Cards
+                          orderby c.Value
+                          select c;
+
+            // setting sorted elements to a place
+            int index = 0;
+            foreach (Card c in sorting)
+            {
+                Cards[index] = c;
+                index++;
+            }
         }
     }
 }
