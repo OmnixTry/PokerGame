@@ -44,6 +44,7 @@ namespace MainGameProject.Combinations
             }
             */
             //var q = handValue.Cards.Select(c => c.Value).Distinct();
+
             List<Cards.Card> notInARow = new List<Cards.Card>();
             int inARow = 1;
             for(int i = handValue.Cards.Count() - 1; i >= 1; i--)
@@ -63,13 +64,22 @@ namespace MainGameProject.Combinations
                 }
             }
 
+            // setting the combination highest caard and Total
             if (inARow >= 5)
             {
                 handValue.Combination = COMBINATION.Straight;
-                handValue.HighCard = (int)notInARow.OrderByDescending(x => (int)x.Value).First().Value;
-                handValue.Total = handValue.Cards.Except(notInARow).Sum(x => (int)x.Value);
+                if (inARow == 7)
+                {
+                    handValue.HighCard = (int)handValue.Cards[1].Value;
+                }
+                else
+                {
+                    handValue.HighCard = (int)notInARow.OrderByDescending(x => (int)x.Value).First().Value;
+                }
+                handValue.Total = handValue.Cards.Except(notInARow).Take(5).Sum(x => (int)x.Value);
             }
 
+            // pocceding to the next Checker
             if(_nextChecker != null)
             {
                 _nextChecker.CheckCombination(handValue);
