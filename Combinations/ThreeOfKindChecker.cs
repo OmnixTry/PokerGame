@@ -22,6 +22,10 @@ namespace MainGameProject.Combinations
                 }
             }
 
+            if(_nextChecker != null)
+            {
+                _nextChecker.CheckCombination(handValue);
+            }
         }
     }
 }
