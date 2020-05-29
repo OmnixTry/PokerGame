@@ -16,7 +16,9 @@ namespace MainGameProject.Combinations
         Straight,
         Flush,
         FullHouse,
-        FourKind
+        FourKind,
+        StraightFlush,
+        RoyalStraightFlush
     }
 
     /// <summary>

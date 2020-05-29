@@ -77,6 +77,7 @@ namespace MainGameProject.Combinations
                     handValue.HighCard = (int)notInARow.OrderByDescending(x => (int)x.Value).First().Value;
                 }
                 handValue.Total = handValue.Cards.Except(notInARow).Take(5).Sum(x => (int)x.Value);
+                return;
             }
 
             // pocceding to the next Checker
