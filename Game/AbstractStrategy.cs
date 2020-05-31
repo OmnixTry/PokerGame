@@ -26,7 +26,7 @@ namespace MainGameProject.Game
         private List<Card> _table;
 
         private uint _smallBlind;
-        private uint _biggestBet;
+        private uint _biggestBet = 1;
         private uint _bank = 0;
 
         private ICombinationChecker _firstChecker;
@@ -36,19 +36,21 @@ namespace MainGameProject.Game
         public void Play(uint startMoney)
         {
             // game preparations
+            
             InicializeDeck();
             InicializePlayers(startMoney);
+            if (!CanTheyProcceed()) return;
             SetupCheckers();
             GiveStartCards();
 
             Preflop();
-            if (Flop())
+            if (CanTheyProcceed() && Flop())
             {
                 DisplayBanks();
-                if (Turn())
+                if (CanTheyProcceed() && Turn())
                 {
                     DisplayBanks();
-                    if (!River())
+                    if (CanTheyProcceed() && !River())
                     {
                         DisplayBanks();
                         return;
@@ -363,6 +365,27 @@ namespace MainGameProject.Game
             _biggestBet = 0;
             _deck = null;
             _table = null;
+        }
+
+        public virtual bool CanTheyProcceed()
+        {
+            if(_player1.Cash < _biggestBet)
+            {
+                Console.SetCursorPosition(0, DrawCards.FreeScreenSpace + 4);
+                Console.WriteLine("PLayer1 has no money he's lost");
+                _player2.WinBank(_bank);
+                _bank = 0;
+                return false;
+            }
+            else if(_player2.Cash < _biggestBet)
+            {
+                Console.SetCursorPosition(0, DrawCards.FreeScreenSpace + 4);
+                Console.WriteLine("PLayer2 has no money he's lost");
+                _player1.WinBank(_bank);
+                _bank = 0;
+                return false;
+            }
+            return true;
         }
     }
 }

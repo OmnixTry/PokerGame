@@ -24,12 +24,17 @@ namespace MainGameProject.Player
             Cash = startCash;
         }
 
-        /// <summary>
-        /// TODO
-        /// </summary>
-        public override void PerformAction()
+        public override Game.decision PerformAction()
         {
+            Game.decision decision = _abstractStrategy.PCDecisions();
+            Console.SetCursorPosition(0, Cards.DrawCards.FreeScreenSpace);
+            Console.Write("Computer did {0}", decision.ToString());
+            return decision;
+        }
 
+        public static void DisposePLayer()
+        {
+            _instance = null;
         }
     }    
 }

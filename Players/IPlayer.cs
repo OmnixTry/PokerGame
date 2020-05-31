@@ -11,6 +11,6 @@ namespace MainGameProject.Player
     {
         void HandOutCards(List<Card> hand);
         uint MakeBet(uint bet);
-        void PerformAction();
+        Game.decision PerformAction();
     }
 }

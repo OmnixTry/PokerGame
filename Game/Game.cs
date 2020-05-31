@@ -24,5 +24,10 @@ namespace MainGameProject.Game
         {
             _strategy.Play(startMoney);
         }
+
+        public void ResetGame()
+        {
+            _strategy.ResetGame();
+        }
     }
 }

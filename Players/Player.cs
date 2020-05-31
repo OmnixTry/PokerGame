@@ -9,20 +9,36 @@ namespace MainGameProject.Player
 {
     abstract class Player : IPlayer
     {
-        protected List<Card> _hand;
+        public List<Card> Hand { get; protected set; }
         public uint Cash { get; protected set; }
+        protected Game.AbstractStrategy _abstractStrategy;
 
         public void HandOutCards(List<Card> hand)
         {
-            _hand = hand;
+            Hand = hand;
+        }
+
+        public void SetStrategy(Game.AbstractStrategy newStrategy)
+        {
+            _abstractStrategy = newStrategy;
         }
 
         public uint MakeBet(uint bet)
         {
-            Cash -= bet;
+            if (Cash >= bet)
+            {
+                Cash -= bet;
+            }
+            else Cash = 0;
             return bet;
         }
 
-        public abstract void PerformAction();
+        public void WinBank(uint bank)
+        {
+            Cash += bank;
+        }
+
+        public abstract Game.decision PerformAction();
+
     }
 }

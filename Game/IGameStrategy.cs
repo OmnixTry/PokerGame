@@ -9,5 +9,6 @@ namespace MainGameProject.Game
     interface IGameStrategy
     {
         void Play(uint startMoney);
+        void ResetGame();
     }
 }
