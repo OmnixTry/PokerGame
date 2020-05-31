@@ -84,5 +84,47 @@ namespace MainGameProject.Combinations
                 index++;
             }
         }
+
+        public static bool operator >(HandValue handValue1, HandValue handValue2)
+        {
+            if (handValue1.Combination > handValue2.Combination)
+                return true;
+            else if (handValue1.Combination == handValue2.Combination)
+            {
+                if (handValue1.Total > handValue2.Total)
+                    return true;
+                else if (handValue1.Total == handValue2.Total)
+                {
+                    return handValue1.HighCard > handValue2.HighCard;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+
+        public static bool operator <(HandValue handValue1, HandValue handValue2)
+        {
+            if (handValue1.Combination > handValue2.Combination)
+                return false;
+            else if (handValue1.Combination == handValue2.Combination)
+            {
+                if (handValue1.Total > handValue2.Total)
+                    return false;
+                else if (handValue1.Total == handValue2.Total)
+                {
+                    return handValue1.HighCard < handValue2.HighCard;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+                return true;
+        }
     }
 }

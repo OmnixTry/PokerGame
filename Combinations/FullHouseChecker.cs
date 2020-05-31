@@ -47,6 +47,10 @@ namespace MainGameProject.Combinations
                     tripple.Add(handValue.Cards[i-2]);
                     inARow = 1;
                 }
+                else
+                {
+                    inARow = 1;
+                }
             }
 
             if (inARow == 3)

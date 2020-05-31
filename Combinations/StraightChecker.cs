@@ -60,7 +60,7 @@ namespace MainGameProject.Combinations
                 else
                 {
                     notInARow.Add(handValue.Cards[i]);
-                    inARow = 1;
+                    if(inARow != 5) inARow = 1;
                 }
             }
 

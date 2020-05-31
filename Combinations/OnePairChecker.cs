@@ -20,7 +20,6 @@ namespace MainGameProject.Combinations
                 return;
             }
 
-
             if (_nextChecker != null)
                 _nextChecker.CheckCombination(handValue);
         }

@@ -12,9 +12,11 @@ namespace MainGameProject.Combinations
         {
             var group = handValue.Cards.GroupBy(c => c.Suit).Where(g => g.Count() >= 5);
             List<Cards.Card> oneSuitCards = new List<Cards.Card>();
-            foreach (Cards.Card card in group.First().OrderBy(c => c.Value))
-                oneSuitCards.Add(card);
-
+            if (group.Count() != 0)
+            {
+                foreach (Cards.Card card in group.First().OrderBy(c => c.Value))
+                    oneSuitCards.Add(card);
+            }
             if (oneSuitCards.Count() > 0)
             {
 
