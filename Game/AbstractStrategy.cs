@@ -17,19 +17,19 @@ namespace MainGameProject.Game
         Raise
     }
 
-    class AbstractStrategy : IGameStrategy
+    abstract class AbstractStrategy : IGameStrategy
     {
-        private Player.Player _player1;
-        private Player.Player _player2;
+        protected Player.Player _player1;
+        protected Player.Player _player2;
 
-        private Deck _deck;
-        private List<Card> _table;
+        protected Deck _deck;
+        protected List<Card> _table;
 
-        private uint _smallBlind;
-        private uint _biggestBet = 1;
-        private uint _bank = 0;
+        protected uint _smallBlind;
+        protected uint _biggestBet = 1;
+        protected uint _bank = 0;
 
-        private ICombinationChecker _firstChecker;
+        protected ICombinationChecker _firstChecker;
         /// <summary>
         /// Method that iniciates the game process
         /// </summary>
@@ -128,7 +128,7 @@ namespace MainGameProject.Game
             DisplayBanks();
 
             // Set blinds
-            Console.SetCursorPosition(0, DrawCards.FreeScreenSpace - 1);
+            Console.SetCursorPosition(0, DrawCards.SmallBlindSpace);
             Console.Write("Your small blind: ");
             _smallBlind = uint.Parse(Console.ReadLine());
             _biggestBet = 2 * _smallBlind;
@@ -138,56 +138,7 @@ namespace MainGameProject.Game
             DisplayBanks();
         }
 
-        protected virtual bool Flop()
-        {
-            _table.Add(_deck.Pop());
-            _table.Add(_deck.Pop());
-            _table.Add(_deck.Pop());
-            DrawCards.DisplayCards(_table, 2);
-            decision player1Decision = _player1.PerformAction();
-            switch (player1Decision)
-            {
-                case decision.Fold:
-                    Console.WriteLine("Player 2 wins!\n\n\n\n");
-                    _player2.WinBank(_bank);
-                    
-                    return false;
-                case decision.Call:
-                    _player1.MakeBet(_biggestBet);
-                    _bank += _biggestBet;
-                    break;
-                case decision.Raise:
-                    _biggestBet += _smallBlind;
-                    _player1.MakeBet(_biggestBet);
-                    _bank += _biggestBet;                    
-                    break;
-                default:
-                    break;
-            }
-
-            decision player2Decision = _player2.PerformAction();
-            switch (player2Decision)
-            {
-                case decision.Fold:
-                    Console.WriteLine("Player 1 wins!\n\n\n\n");
-                    _player1.WinBank(_bank);
-                    _bank = 0;
-                    return false;
-                case decision.Call:
-                    _player2.MakeBet(_biggestBet);
-                    _bank += _biggestBet;
-                    break;
-                case decision.Raise:
-                    _biggestBet += _smallBlind;
-                    _player2.MakeBet(_biggestBet);
-                    _bank += _biggestBet;
-                    break;
-                default:
-                    break;
-            }
-            Console.WriteLine(" Biggest Bet:{0}        ", _biggestBet);
-            return true;
-        }
+        protected abstract bool Flop();
 
         protected virtual bool Turn()
         {
@@ -317,6 +268,16 @@ namespace MainGameProject.Game
                 return decision.Fold;
         }
 
+        public virtual void PCDecisionPreflop() { }
+        public virtual void PCDecisionFlop() { }
+        public virtual void PCDecisionTurn() { }
+        public virtual void PCDecisionRiver() { }
+
+        public virtual void PlayerDecisionPreflop() { }
+        public virtual void PlayerDecisionFlop() { }
+        public virtual void PlayerDecisionTurn() { }
+        public virtual void PlayerDecisionRiver() { }
+
         protected void Showdown()
         {
             foreach(Card card in _table)
@@ -356,10 +317,8 @@ namespace MainGameProject.Game
             DisplayBanks();
         }
 
-        public void ResetGame()
+        public void ResetStrategy()
         {
-            ComputerPlayer.DisposePLayer();
-            HumanPlayer.DisposePLayer();
             _bank = 0;
             _smallBlind = 0;
             _biggestBet = 0;
@@ -371,7 +330,7 @@ namespace MainGameProject.Game
         {
             if(_player1.Cash < _biggestBet)
             {
-                Console.SetCursorPosition(0, DrawCards.FreeScreenSpace + 4);
+                Console.SetCursorPosition(0, DrawCards.GameResultSpace);
                 Console.WriteLine("PLayer1 has no money he's lost");
                 _player2.WinBank(_bank);
                 _bank = 0;
@@ -379,7 +338,7 @@ namespace MainGameProject.Game
             }
             else if(_player2.Cash < _biggestBet)
             {
-                Console.SetCursorPosition(0, DrawCards.FreeScreenSpace + 4);
+                Console.SetCursorPosition(0, DrawCards.GameResultSpace);
                 Console.WriteLine("PLayer2 has no money he's lost");
                 _player1.WinBank(_bank);
                 _bank = 0;
