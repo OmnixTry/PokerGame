@@ -15,32 +15,8 @@ namespace MainGameProject
     {
         static void Main(string[] args)
         {
-            
-            Console.SetWindowSize(90, 51);
-            // remove scroll bars by setting the buffer to the actual window size
-            Console.BufferWidth = 90;
-            Console.BufferHeight = 51;
-            Console.Title = "Poker Game";
-            Console.BackgroundColor = ConsoleColor.Gray;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.OutputEncoding = Encoding.GetEncoding(65001);
-            Console.Clear();
-            string choice;
-            do {
-                Game.Game game = new Game.Game(new AbstractStrategy());
-                Console.WriteLine("Set starter Money");
-                uint startMoney = uint.Parse(Console.ReadLine());
-                do
-                {
-                    Console.Clear();
-                    game.PlayGame(startMoney);
-                    Console.SetCursorPosition(0, DrawCards.FreeScreenSpace + 8);
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.WriteLine("Try Again? Y/N");
-                } while (Console.ReadLine().ToUpper() == "Y");
-                game.ResetGame();
-                Console.WriteLine("New game?Y/N");
-            } while (Console.ReadLine().ToUpper() == "Y");
+            Game.Game game = new Game.Game();
+            game.PlayGame();
             /*
             HandValue hand = new HandValue(new List<Card>
             {
@@ -78,7 +54,7 @@ namespace MainGameProject
             Console.WriteLine(hand.Combination);
             */
 
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }
