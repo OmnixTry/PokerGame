@@ -36,5 +36,22 @@ namespace MainGameProject.Player
         {
             _instance = null;
         }
+
+        public override void PreflopAction()
+        {
+            _abstractStrategy.PCDecisionPreflop();
+        }
+        public override void FlopAction()
+        {
+            _abstractStrategy.PCDecisionFlop();
+        }
+        public override void TurnAction()
+        {
+            _abstractStrategy.PCDecisionTurn();
+        }
+        public override void RiverAction()
+        {
+            _abstractStrategy.PCDecisionRiver();
+        }
     }    
 }

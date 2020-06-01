@@ -20,6 +20,10 @@ namespace MainGameProject.Combinations
                 foreach (var group in groups.Take(2))
                 {
                     handValue.Total = group.Sum(c => (int)c.Value);
+                    foreach (var card in group)
+                    {
+                        handValue.VinningCombination.Add(card);
+                    }
                 }
                 handValue.HighCard = (int)handValue.Cards
                     .GroupBy(c => c.Value)

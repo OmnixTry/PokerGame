@@ -40,5 +40,15 @@ namespace MainGameProject.Player
 
         public abstract Game.decision PerformAction();
 
+        public void Discard(List<Card> toDiscard)
+        {
+            Hand = Hand.Except(toDiscard).ToList();
+        }
+
+        public virtual void PreflopAction() { }
+        public virtual void FlopAction() { }
+        public virtual void TurnAction() { }
+        public virtual void RiverAction() { }
+
     }
 }

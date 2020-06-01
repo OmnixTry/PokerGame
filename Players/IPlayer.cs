@@ -12,5 +12,10 @@ namespace MainGameProject.Player
         void HandOutCards(List<Card> hand);
         uint MakeBet(uint bet);
         Game.decision PerformAction();
+
+        void PreflopAction();
+        void FlopAction();
+        void TurnAction();
+        void RiverAction();
     }
 }

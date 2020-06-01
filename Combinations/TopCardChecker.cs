@@ -11,6 +11,7 @@ namespace MainGameProject.Combinations
         public override void CheckCombination(HandValue handValue)
         {
             handValue.HighCard = (int)handValue.Cards.OrderByDescending(c => c.Value).First().Value;
+            handValue.VinningCombination.Add(handValue.Cards.OrderByDescending(c => c.Value).First());
         }
     }
 }

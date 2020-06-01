@@ -9,7 +9,12 @@ namespace MainGameProject.Cards
 {
     class DrawCards
     {
+        public const int SmallBlindSpace = 31;
         public const int FreeScreenSpace = 32;
+        public const int DiscardingSpace = 37;
+        public const int GameResultSpace = 36;
+        public const int EndMenuSpace = 40;
+
         //draw cards outlines
         public static void DrawCardOutline(int xcoor, int ycoor)
         {

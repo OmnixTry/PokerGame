@@ -15,6 +15,10 @@ namespace MainGameProject.Combinations
             {
                 if(group.Count() == 3)
                 {
+                    foreach (var card in group)
+                    {
+                        handValue.VinningCombination.Add(card);
+                    }
                     handValue.Total = group.Select(x => (int)x.Value).Sum();
                     handValue.HighCard = (int)handValue.Cards.Except(group).OrderBy(x => x.Value).First().Value;
                     handValue.Combination = COMBINATION.ThreeKind;

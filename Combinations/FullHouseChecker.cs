@@ -73,6 +73,12 @@ namespace MainGameProject.Combinations
                 handValue.Total += (int)tripple[1].Value;
                 handValue.Total += (int)tripple[2].Value;
 
+                handValue.VinningCombination.Add(pair[0]);
+                handValue.VinningCombination.Add(pair[1]);
+                handValue.VinningCombination.Add(tripple[0]);
+                handValue.VinningCombination.Add(tripple[1]);
+                handValue.VinningCombination.Add(tripple[2]);
+
                 Cards.Card topCard = handValue.Cards.Except(pair).Except(tripple).OrderByDescending(x => x.Value).First();
                 handValue.Combination = COMBINATION.FullHouse;
                 handValue.HighCard = (int)topCard.Value;
