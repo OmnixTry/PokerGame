@@ -20,6 +20,14 @@ namespace MainGameProject.Combinations
                                            select c).OrderByDescending(c => c.Value).First().Value;
 
                 handValue.Combination = COMBINATION.Flush;
+
+                var q = from c in handValue.Cards
+                        where c.Suit == Cards.SUIT.HEARTS
+                        select c;
+                foreach (Cards.Card card in q)
+                {
+                    handValue.VinningCombination.Add(card);
+                }
                 return;
             }
             else if (handValue.DiamondSum == 5)
@@ -32,6 +40,14 @@ namespace MainGameProject.Combinations
                                            select c).OrderByDescending(c => c.Value).First().Value;
 
                 handValue.Combination = COMBINATION.Flush;
+
+                var q = from c in handValue.Cards
+                        where c.Suit == Cards.SUIT.DIAMONDS
+                        select c;
+                foreach (Cards.Card card in q)
+                {
+                    handValue.VinningCombination.Add(card);
+                }
                 return;
             }
             else if (handValue.ClubSum == 5)
@@ -44,6 +60,14 @@ namespace MainGameProject.Combinations
                                            select c).OrderByDescending(c => c.Value).First().Value;
 
                 handValue.Combination = COMBINATION.Flush;
+
+                var q = from c in handValue.Cards
+                        where c.Suit == Cards.SUIT.CLUBS
+                        select c;
+                foreach (Cards.Card card in q)
+                {
+                    handValue.VinningCombination.Add(card);
+                }
                 return;
             }
             else if (handValue.SpadesSum == 5)
@@ -56,6 +80,14 @@ namespace MainGameProject.Combinations
                                            select c).OrderByDescending(c => c.Value).First().Value;
 
                 handValue.Combination = COMBINATION.Flush;
+
+                var q = from c in handValue.Cards
+                        where c.Suit == Cards.SUIT.SPADES
+                        select c;
+                foreach (Cards.Card card in q)
+                {
+                    handValue.VinningCombination.Add(card);
+                }
                 return;
             }
 

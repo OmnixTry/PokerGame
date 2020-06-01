@@ -17,6 +17,10 @@ namespace MainGameProject.Combinations
                 handValue.Combination = COMBINATION.OnePair;
                 handValue.Total = groups.First().Sum(x => (int)x.Value);
                 handValue.HighCard = (int)groups.Where(x => x.Key != groups.First().Key).OrderBy(x => x.Key).Last().Key;
+                foreach (Cards.Card card in groups.First())
+                {
+                    handValue.VinningCombination.Add(card);
+                }
                 return;
             }
 

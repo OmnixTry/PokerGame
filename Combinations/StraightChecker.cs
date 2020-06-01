@@ -47,11 +47,13 @@ namespace MainGameProject.Combinations
 
             List<Cards.Card> notInARow = new List<Cards.Card>();
             int inARow = 1;
-            for(int i = handValue.Cards.Count() - 1; i >= 1; i--)
+            handValue.VinningCombination.Add(handValue.Cards[handValue.Cards.Count() - 1]);
+            for (int i = handValue.Cards.Count() - 1; i >= 1; i--)
             {
                 if(handValue.Cards[i].Value - 1 == handValue.Cards[i - 1].Value)
                 {
                     inARow++;
+                    handValue.VinningCombination.Add(handValue.Cards[i - 1]);
                 }
                 else if (handValue.Cards[i].Value == handValue.Cards[i - 1].Value)
                 {
@@ -60,7 +62,13 @@ namespace MainGameProject.Combinations
                 else
                 {
                     notInARow.Add(handValue.Cards[i]);
-                    if(inARow != 5) inARow = 1;
+                    if(inARow != 5)
+                    {
+                        inARow = 1;
+                        handValue.VinningCombination.Clear();
+                        handValue.VinningCombination.Add(handValue.Cards[i - 1]);
+                    }
+                        
                 }
             }
 

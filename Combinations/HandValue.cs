@@ -36,6 +36,7 @@ namespace MainGameProject.Combinations
         public int ClubSum { get; private set; }
         public int SpadesSum { get; private set; }
         public List<Card> Cards { get; private set; }
+        public List<Card> VinningCombination;
 
         /// <summary>
         /// Calculates number of each suit in the final hand 
@@ -62,6 +63,7 @@ namespace MainGameProject.Combinations
         public HandValue(List<Card> cards)
         {
             Cards = cards;
+            VinningCombination = new List<Card>();
             GetNumberOfSuit();
             SortCards();
         }

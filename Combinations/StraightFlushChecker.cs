@@ -22,16 +22,23 @@ namespace MainGameProject.Combinations
 
                 List<Cards.Card> notInARow = new List<Cards.Card>();
                 int inARow = 1;
+                handValue.VinningCombination.Add(oneSuitCards[oneSuitCards.Count() - 1]);
                 for (int i = oneSuitCards.Count() - 1; i >= 1; i--)
                 {
                     if (oneSuitCards[i].Value - 1 == oneSuitCards[i - 1].Value)
                     {
                         inARow++;
+                        handValue.VinningCombination.Add(oneSuitCards[i - 1]);
                     }
                     else
-                    {
+                    { 
                         notInARow.Add(handValue.Cards[i]);
-                        inARow = 1;
+                        if (inARow != 5)
+                        {
+                            handValue.VinningCombination.Clear();
+                            handValue.VinningCombination.Add(handValue.Cards[i - 1]);
+                            inARow = 1;
+                        }
                     }
                 }
 
@@ -55,9 +62,6 @@ namespace MainGameProject.Combinations
                     return;
                 }
             }
-
-
-
 
             if (_nextChecker != null)
             {
