@@ -291,11 +291,11 @@ namespace MainGameProject.Game
             DrawCards.DisplayCards(_player2.Hand, 2);
 
             // processing the hands 
-            HandValue p1Hand = new HandValue(_player1.Hand);
-            HandValue p2Hand = new HandValue(_player2.Hand);
+            HandValue p1Hand = _firstChecker.CheckCombination(_player1.Hand);
+            HandValue p2Hand = _firstChecker.CheckCombination(_player2.Hand);
 
-            _firstChecker.CheckCombination(p1Hand);
-            _firstChecker.CheckCombination(p2Hand);
+
+
 
             DisplayBanks();
             Console.SetCursorPosition(0, 36);

@@ -3,33 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MainGameProject.Cards;
 
 namespace MainGameProject.Combinations
 {
     class ThreeOfKindChecker : BaseCombinationChecker
     {
-        public override void CheckCombination(HandValue handValue)
+        public override HandValue CheckCombination(List<Card> cards)
         {
-            var groupsByValue = handValue.Cards.GroupBy(c => c.Value).OrderByDescending(g => g.Key);
-            foreach(var group in groupsByValue)
+            var OneValueCards = from c in cards
+                                group c by c.Value into grp
+                                where grp.Count() >= 3
+                                select grp;
+
+            if (OneValueCards.Count() == 1)
             {
-                if(group.Count() == 3)
-                {
-                    foreach (var card in group)
-                    {
-                        handValue.VinningCombination.Add(card);
-                    }
-                    handValue.Total = group.Select(x => (int)x.Value).Sum();
-                    handValue.HighCard = (int)handValue.Cards.Except(group).OrderBy(x => x.Value).First().Value;
-                    handValue.Combination = COMBINATION.ThreeKind;
-                    return;
-                }
+                List<Cards.Card> vinningCombination = OneValueCards.First().ToList();
+                COMBINATION combination = COMBINATION.ThreeKind;
+                return new HandValue(cards, vinningCombination, combination);
             }
 
-            if(_nextChecker != null)
+            if (_nextChecker != null)
             {
-                _nextChecker.CheckCombination(handValue);
+                return _nextChecker.CheckCombination(cards);
             }
+            else return null;
         }
     }
 }

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MainGameProject.Cards;
 
 namespace MainGameProject.Combinations
 {
     class TopCardChecker : BaseCombinationChecker
     {
-        public override void CheckCombination(HandValue handValue)
+        public override HandValue CheckCombination(List<Card> cards)
         {
-            handValue.HighCard = (int)handValue.Cards.OrderByDescending(c => c.Value).First().Value;
-            handValue.VinningCombination.Add(handValue.Cards.OrderByDescending(c => c.Value).First());
+            List<Card> highestCard = new List<Card>();
+            highestCard.Add(cards.OrderByDescending(c => c.Value).First());
+            return new HandValue(cards, highestCard, COMBINATION.Nothing);            
         }
     }
 }

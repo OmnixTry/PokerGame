@@ -27,64 +27,40 @@ namespace MainGameProject.Combinations
     class HandValue
     {
         // the result of evaluating hand
-        public COMBINATION Combination { get; set; }
-        public int Total { get; set; }
-        public int HighCard { get; set; }
+        public COMBINATION Combination { get; private set; }
+        public int Total { get; private set; }
+        public int HighCard { get; private set; }
+        private List<Card> _vinningCombination;
 
-        public int HeartsSum { get; private set; }
-        public int DiamondSum { get; private set; }
-        public int ClubSum { get; private set; }
-        public int SpadesSum { get; private set; }
-        public List<Card> Cards { get; private set; }
-        public List<Card> VinningCombination;
-
-        /// <summary>
-        /// Calculates number of each suit in the final hand 
-        /// </summary>
-        private void GetNumberOfSuit()
+        private List<Card> Cards { get; set; }
+        public List<Card> VinningCombination
         {
-            foreach (Card card in Cards)
+            get
             {
-                if (card.Suit == SUIT.HEARTS)
-                    HeartsSum++;
-                else if (card.Suit == SUIT.DIAMONDS)
-                    DiamondSum++;
-                else if (card.Suit == SUIT.CLUBS)
-                    ClubSum++;
-                else if (card.Suit == SUIT.SPADES)
-                    SpadesSum++;
+                return _vinningCombination;
+            }
+            private set
+            {
+                _vinningCombination = value;
+                // Calculate sum of combination and highest card
+                Total = _vinningCombination.Sum(c => (int)c.Value);
+                HighCard = (int)Cards.Except(_vinningCombination).OrderByDescending(c => c.Value).First().Value;
             }
         }
 
+             
+
         /// <summary>
-        /// Sets up the cards and prepares class for usage in evaluation rules
+        /// Saves the result of checking combination
         /// </summary>
-        /// <param name="cards">The cards to put in the class for further evaluation</param>
-        public HandValue(List<Card> cards)
+        /// <param name="cards">All the cards from hand and table</param>
+        /// <param name="vinningCombination">The cards that form the combination</param>
+        /// <param name="combination">The type of combination formed in this handValue</param>
+        public HandValue(List<Card> cards, List<Card> vinningCombination, COMBINATION combination)
         {
             Cards = cards;
-            VinningCombination = new List<Card>();
-            GetNumberOfSuit();
-            SortCards();
-        }
-
-        /// <summary>
-        /// Sorts cards in the deck to make defining combinations esier
-        /// </summary>
-        private void SortCards()
-        {
-            // sorting using Linq
-            var sorting = from c in Cards
-                          orderby c.Value
-                          select c;
-
-            // setting sorted elements to a place
-            int index = 0;
-            foreach (Card c in sorting)
-            {
-                Cards[index] = c;
-                index++;
-            }
+            VinningCombination = vinningCombination;
+            Combination = combination;
         }
 
         public static bool operator >(HandValue handValue1, HandValue handValue2)

@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MainGameProject.Cards;
 
 namespace MainGameProject.Combinations
 {
     class OnePairChecker : BaseCombinationChecker
     {
-        public override void CheckCombination(HandValue handValue)
+        public override HandValue CheckCombination(List<Card> cards)
         {
-            var groups = handValue.Cards.GroupBy(c => c.Value).OrderByDescending(g => g.Count());
+            var OneValueCards = from c in cards
+                                group c by c.Value into grp
+                                where grp.Count() == 2
+                                orderby grp.Key descending
+                                select grp;
 
-            if(groups.First().Count() == 2)
+            if (OneValueCards.Count() >= 1)
             {
-                handValue.Combination = COMBINATION.OnePair;
-                handValue.Total = groups.First().Sum(x => (int)x.Value);
-                handValue.HighCard = (int)groups.Where(x => x.Key != groups.First().Key).OrderBy(x => x.Key).Last().Key;
-                foreach (Cards.Card card in groups.First())
-                {
-                    handValue.VinningCombination.Add(card);
-                }
-                return;
+                List<Cards.Card> vinningCombination = OneValueCards.First().ToList();
+                COMBINATION combination = COMBINATION.OnePair;
+                return new HandValue(cards, vinningCombination, combination);
             }
 
             if (_nextChecker != null)
-                _nextChecker.CheckCombination(handValue);
+            {
+                return _nextChecker.CheckCombination(cards);
+            }
+            else return null;
         }
     }
 }

@@ -3,98 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MainGameProject.Cards;
 
 namespace MainGameProject.Combinations
 {
     class FlushChecker : BaseCombinationChecker
     {
-        public override void CheckCombination(HandValue handValue)
+        public override HandValue CheckCombination(List<Card> cards)
         {
-            if (handValue.HeartsSum == 5)
+            var OneSuitCards= from c in cards
+                           group c by c.Suit into grp
+                           where grp.Count() >= 5
+                           
+                           select grp;
+
+            if (OneSuitCards.Count() == 1)
             {
-                handValue.Total = (from c in handValue.Cards
-                                   where c.Suit == Cards.SUIT.HEARTS
-                                   select c).Sum(c => (int)c.Value);
-                handValue.HighCard = (int)(from c in handValue.Cards
-                                           where c.Suit != Cards.SUIT.HEARTS
-                                           select c).OrderByDescending(c => c.Value).First().Value;
-
-                handValue.Combination = COMBINATION.Flush;
-
-                var q = from c in handValue.Cards
-                        where c.Suit == Cards.SUIT.HEARTS
-                        select c;
-                foreach (Cards.Card card in q)
-                {
-                    handValue.VinningCombination.Add(card);
-                }
-                return;
-            }
-            else if (handValue.DiamondSum == 5)
-            {
-                handValue.Total = (from c in handValue.Cards
-                                   where c.Suit == Cards.SUIT.DIAMONDS
-                                   select c).Sum(c => (int)c.Value);
-                handValue.HighCard = (int)(from c in handValue.Cards
-                                           where c.Suit != Cards.SUIT.DIAMONDS
-                                           select c).OrderByDescending(c => c.Value).First().Value;
-
-                handValue.Combination = COMBINATION.Flush;
-
-                var q = from c in handValue.Cards
-                        where c.Suit == Cards.SUIT.DIAMONDS
-                        select c;
-                foreach (Cards.Card card in q)
-                {
-                    handValue.VinningCombination.Add(card);
-                }
-                return;
-            }
-            else if (handValue.ClubSum == 5)
-            {
-                handValue.Total = (from c in handValue.Cards
-                                   where c.Suit == Cards.SUIT.CLUBS
-                                   select c).Sum(c => (int)c.Value);
-                handValue.HighCard = (int)(from c in handValue.Cards
-                                           where c.Suit != Cards.SUIT.CLUBS
-                                           select c).OrderByDescending(c => c.Value).First().Value;
-
-                handValue.Combination = COMBINATION.Flush;
-
-                var q = from c in handValue.Cards
-                        where c.Suit == Cards.SUIT.CLUBS
-                        select c;
-                foreach (Cards.Card card in q)
-                {
-                    handValue.VinningCombination.Add(card);
-                }
-                return;
-            }
-            else if (handValue.SpadesSum == 5)
-            {
-                handValue.Total = (from c in handValue.Cards
-                                   where c.Suit == Cards.SUIT.SPADES
-                                   select c).Sum(c => (int)c.Value);
-                handValue.HighCard = (int)(from c in handValue.Cards
-                                           where c.Suit != Cards.SUIT.SPADES
-                                           select c).OrderByDescending(c => c.Value).First().Value;
-
-                handValue.Combination = COMBINATION.Flush;
-
-                var q = from c in handValue.Cards
-                        where c.Suit == Cards.SUIT.SPADES
-                        select c;
-                foreach (Cards.Card card in q)
-                {
-                    handValue.VinningCombination.Add(card);
-                }
-                return;
+                List<Cards.Card> vinningCombination = OneSuitCards.First().ToList();
+                COMBINATION combination = COMBINATION.Flush;
+                return new HandValue(cards, vinningCombination, combination);
             }
 
-            if(_nextChecker != null)
+            if (_nextChecker != null)
             {
-                _nextChecker.CheckCombination(handValue);
+                return _nextChecker.CheckCombination(cards);
             }
+            else return null;
         }
     }
 }

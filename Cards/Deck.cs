@@ -46,7 +46,7 @@ namespace MainGameProject.Cards
                 for (int i = 0; i < _cards.Count; i++)
                 {
                     //swap the cards
-                    int secondCardIndex = rand.Next(13);
+                    int secondCardIndex = rand.Next(_cards.Count());
                     temp = _cards[i];
                     _cards[i] = _cards[secondCardIndex];
                     _cards[secondCardIndex] = temp;

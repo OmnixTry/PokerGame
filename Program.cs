@@ -15,19 +15,22 @@ namespace MainGameProject
     {
         static void Main(string[] args)
         {
+            
             Game.Game game = new Game.Game();
             game.PlayGame();
+            
+
             /*
-            HandValue hand = new HandValue(new List<Card>
+            List<Card> hand = new List<Card>
             {
-                new Card(SUIT.CLUBS, VALUE.SEVEN),
-                new Card(SUIT.SPADES, VALUE.SEVEN),
-                new Card(SUIT.SPADES, VALUE.KING),
-                new Card(SUIT.SPADES, VALUE.EIGHT),
-                new Card(SUIT.CLUBS, VALUE.FIVE),
-                new Card(SUIT.DIAMONDS, VALUE.FIVE),
+                new Card(SUIT.CLUBS, VALUE.TWO),
+                new Card(SUIT.HEARTS, VALUE.SIX),
+                new Card(SUIT.CLUBS, VALUE.FOUR),
+                new Card(SUIT.HEARTS, VALUE.FIVE),
+                new Card(SUIT.CLUBS, VALUE.NINE),
+                new Card(SUIT.HEARTS, VALUE.QUEEN),
                 new Card(SUIT.DIAMONDS, VALUE.KING)
-            });
+            };
 
             RoyalStraightFlushChecker royalStraightFlushChecker = new RoyalStraightFlushChecker();
             StraightFlushChecker straightFlushChecker = new StraightFlushChecker();
@@ -49,11 +52,18 @@ namespace MainGameProject
             threeOfKindChecker.SetNext(twoPairsChecker);
             twoPairsChecker.SetNext(onePairChecker);
             onePairChecker.SetNext(topCardChecker);
-
+            
             royalStraightFlushChecker.CheckCombination(hand);
-            Console.WriteLine(hand.Combination);
-            */
+            HandValue handValue = royalStraightFlushChecker.CheckCombination(hand);
+            Console.WriteLine(handValue.Combination);
+            Console.WriteLine(handValue.HighCard);
+            Console.WriteLine(handValue.Total);
 
+            foreach (Card card in handValue.VinningCombination)
+            {
+                Console.WriteLine("{1} of {0}", card.Suit, card.Value);
+            }
+            */
             //Console.ReadLine();
         }
     }

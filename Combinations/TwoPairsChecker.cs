@@ -3,39 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MainGameProject.Cards;
 
 namespace MainGameProject.Combinations
 {
     class TwoPairsChecker : BaseCombinationChecker
     {
-        public override void CheckCombination(HandValue handValue)
+        public override HandValue CheckCombination(List<Card> cards)
         {
-            var groups = handValue.Cards
-                .GroupBy(c => c.Value)
-                .Where(g => g.Count() == 2)
-                .OrderByDescending(g => g.Key);
+            var OneValueCards = from c in cards
+                                group c by c.Value into grp
+                                where grp.Count() == 2
+                                orderby grp.Key descending
+                                select grp;
 
-            if(groups.Count() >= 2)
+            if (OneValueCards.Count() >= 2)
             {
-                foreach (var group in groups.Take(2))
-                {
-                    handValue.Total = group.Sum(c => (int)c.Value);
-                    foreach (var card in group)
-                    {
-                        handValue.VinningCombination.Add(card);
-                    }
-                }
-                handValue.HighCard = (int)handValue.Cards
-                    .GroupBy(c => c.Value)
-                    .OrderByDescending(g => g.Key).Skip(2).First().Key;
-                handValue.Combination = COMBINATION.TwoPairs;
-                return; 
+                List<Cards.Card> vinningCombination = OneValueCards.First().Union(OneValueCards.Take(2).Last()).ToList();
+                COMBINATION combination = COMBINATION.TwoPairs;
+                return new HandValue(cards, vinningCombination, combination);
             }
 
             if (_nextChecker != null)
             {
-                _nextChecker.CheckCombination(handValue);
+                return _nextChecker.CheckCombination(cards);
             }
+            else return null;
         }
     }
 }

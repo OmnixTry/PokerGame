@@ -9,6 +9,6 @@ namespace MainGameProject.Combinations
     interface ICombinationChecker
     {
         void SetNext(ICombinationChecker nextHandler);
-        void CheckCombination(HandValue handValue);
+        HandValue CheckCombination(List<Cards.Card> cards);
     }
 }

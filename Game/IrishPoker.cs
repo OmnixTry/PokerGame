@@ -81,8 +81,9 @@ namespace MainGameProject.Game
 
         public override void PCDecisionFlop()
         {
-            Combinations.HandValue handValue = new Combinations.HandValue(_player2.Hand.Union(_table).ToList());
-            _firstChecker.CheckCombination(handValue);
+            Combinations.HandValue handValue = _firstChecker.CheckCombination(_player2.Hand.Union(_table).ToList());
+            
+            
 
             var toDiscard = _player2.Hand.Except(handValue.VinningCombination);
 
