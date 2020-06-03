@@ -14,6 +14,10 @@ namespace MainGameProject.Cards
         // the cards of the deck
         private List<Card> _cards;
         
+        /// <summary>
+        /// Creates new deck empty deck and pust list of cards in it
+        /// </summary>
+        /// <param name="cards">The list of cards of the deck</param>
         public Deck(List<Card> cards)
         {
             _cards = cards;

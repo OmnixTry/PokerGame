@@ -7,15 +7,23 @@ using MainGameProject.Cards;
 
 namespace MainGameProject.Cards
 {
+    /// <summary>
+    /// Class for drawing cards in the console window
+    /// </summary>
     class DrawCards
     {
+        public const int BankDisplaySpaceX = 15;
         public const int SmallBlindSpace = 31;
         public const int FreeScreenSpace = 32;
         public const int DiscardingSpace = 37;
         public const int GameResultSpace = 36;
         public const int EndMenuSpace = 40;
 
-        //draw cards outlines
+        /// <summary>
+        /// Draws cards outlines
+        /// </summary>
+        /// <param name="xcoor">The x start coordinate of the outline</param>
+        /// <param name="ycoor">The y start coordinate of the outline</param>
         public static void DrawCardOutline(int xcoor, int ycoor)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -37,7 +45,12 @@ namespace MainGameProject.Cards
             }
         }
 
-        //displays suit and value of the card inside its outline
+        /// <summary>
+        /// displays suit and value of the card inside its outline
+        /// </summary>
+        /// <param name="card">The card froperties of which you want to display</param>
+        /// <param name="xcoor">X coordinate pof the outline</param>
+        /// <param name="ycoor">Y coordinate pof the outline</param>
         public static void DrawCardSuitValue(Card card, int xcoor, int ycoor)
         {
             // all suits
@@ -83,11 +96,17 @@ namespace MainGameProject.Cards
             Console.Write(card.Value);
         }
 
+        /// <summary>
+        /// Display the list of cards on console
+        /// </summary>
+        /// <param name="cards">The list of cards to display on he console</param>
+        /// <param name="row">The row of cards you want oto display it on</param>
         public static void DisplayCards(List<Card> cards, int row)
         {
-            
-            int x = 0; //x position of the cursor. We move it left and right
-            int y = 1 + 15 * (row - 1);//y position of the cursor, we move up and down
+            const int StartPosition = 0;
+            const int RowHeight = 15;
+            int x = StartPosition; //x position of the cursor. We move it left and right
+            int y = 1 + RowHeight * (row - 1);//y position of the cursor, we move up and down
 
             //display player hand
             Console.ForegroundColor = ConsoleColor.DarkCyan;       

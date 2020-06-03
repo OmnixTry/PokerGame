@@ -10,6 +10,9 @@ using MainGameProject.Combinations;
 
 namespace MainGameProject.Game
 {
+    /// <summary>
+    /// Decisions player can make
+    /// </summary>
     public enum decision
     {
         Fold,
@@ -65,6 +68,9 @@ namespace MainGameProject.Game
             _bank = 0;
         }
 
+        /// <summary>
+        /// Sets the Chain of responsibility for the combination checkers
+        /// </summary>
         protected virtual void SetupCheckers()
         {
             RoyalStraightFlushChecker royalStraightFlushChecker = new RoyalStraightFlushChecker();
@@ -92,6 +98,10 @@ namespace MainGameProject.Game
 
         }
 
+        /// <summary>
+        /// Inicializes the players of the strategy.
+        /// </summary>
+        /// <param name="startMoney"></param>
         protected virtual void InicializePlayers(uint startMoney)
         {
             _player1 = Player.HumanPlayer.GetInstance(startMoney);
@@ -101,24 +111,36 @@ namespace MainGameProject.Game
 
         }
 
+        /// <summary>
+        /// Inicializes deck of the strategy.
+        /// </summary>
         protected virtual void InicializeDeck()
         {
             _deck = new Deck();
             _table = new List<Card>();
         }
 
+        /// <summary>
+        /// Hands out starter cards for all players
+        /// </summary>
         protected virtual void GiveStartCards()
         {
             _player1.HandOutCards(new List<Card> { _deck.Pop(), _deck.Pop()});
             _player2.HandOutCards(new List<Card> { _deck.Pop(), _deck.Pop()});
         }
 
+        /// <summary>
+        /// Displays cash of players and the game bank.
+        /// </summary>
         protected void DisplayBanks()
         {
-            Console.SetCursorPosition(15, 0);
+            Console.SetCursorPosition(DrawCards.BankDisplaySpaceX, 0);
             Console.Write("PLayer's Money: {0} Computer's Money: {1} Bank: {2}       ", _player1.Cash, _player2.Cash, _bank);
         }
 
+        /// <summary>
+        /// Executes the Preflop part of poker gaeme.
+        /// </summary>
         protected virtual void Preflop()
         {
             Console.Clear();
@@ -138,8 +160,14 @@ namespace MainGameProject.Game
             DisplayBanks();
         }
 
+        /// <summary>
+        /// Executes the Flop part of poker gaeme.
+        /// </summary>
         protected abstract bool Flop();
 
+        /// <summary>
+        /// Executes the Turn part of poker gaeme.
+        /// </summary>
         protected virtual bool Turn()
         {
             _table.Add(_deck.Pop());
@@ -186,6 +214,9 @@ namespace MainGameProject.Game
             return true;
         }
 
+        /// <summary>
+        /// Executes the River part of poker gaeme.
+        /// </summary>
         protected virtual bool River()
         {
             _table.Add(_deck.Pop());
@@ -232,6 +263,10 @@ namespace MainGameProject.Game
             return true;
         }
 
+        /// <summary>
+        /// Decision performed by computer player every part of poker game circle.
+        /// </summary>
+        /// <returns></returns>
         public virtual decision PCDecisions()
         {
             var availableCards = _table.Union(_player2.Hand).OrderBy(c => c.Value);
@@ -268,16 +303,49 @@ namespace MainGameProject.Game
                 return decision.Fold;
         }
 
+        /// <summary>
+        /// Decision of PC PLayer during Preflop.
+        /// </summary>
         public virtual void PCDecisionPreflop() { }
+        
+        /// <summary>
+        /// Decision of PC PLayer during Flop.
+        /// </summary>
         public virtual void PCDecisionFlop() { }
+
+        /// <summary>
+        /// Decision of PC PLayer during Turn.
+        /// </summary>
         public virtual void PCDecisionTurn() { }
+
+        /// <summary>
+        /// Decision of PC PLayer during River.
+        /// </summary>
         public virtual void PCDecisionRiver() { }
 
+        /// <summary>
+        /// Decision of Human PLayer during Preflop.
+        /// </summary>
         public virtual void PlayerDecisionPreflop() { }
+
+        /// <summary>
+        /// Decision of Human PLayer during Flop.
+        /// </summary>
         public virtual void PlayerDecisionFlop() { }
+
+        /// <summary>
+        /// Decision of Human PLayer during Turn.
+        /// </summary>
         public virtual void PlayerDecisionTurn() { }
+
+        /// <summary>
+        /// Decision of Human PLayer during River.
+        /// </summary>
         public virtual void PlayerDecisionRiver() { }
 
+        /// <summary>
+        /// Runs the algorythm of showdown of poker game.
+        /// </summary>
         protected void Showdown()
         {
             foreach(Card card in _table)
@@ -326,6 +394,10 @@ namespace MainGameProject.Game
             _table = null;
         }
 
+        /// <summary>
+        /// Checks if players are not out of cash.
+        /// </summary>
+        /// <returns>Tre if players have money left.</returns>
         public virtual bool CanTheyProcceed()
         {
             if(_player1.Cash < _biggestBet)

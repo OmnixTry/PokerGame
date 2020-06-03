@@ -9,7 +9,7 @@ using MainGameProject.Cards;
 namespace MainGameProject.Game
 {
     /// <summary>
-    /// The facade class 
+    /// The facade class for poker game which contains the logyc of playing the game
     /// </summary>
     class Game
     {
@@ -17,11 +17,18 @@ namespace MainGameProject.Game
 
         public Game() { }
 
+        /// <summary>
+        /// Constructor that sets the strategy of the game
+        /// </summary>
+        /// <param name="strategy">a chosen strategy for poker.</param>
         private void SetStrategy(IGameStrategy strategy)
         {
             _strategy = strategy;
         }
 
+        /// <summary>
+        /// Runs the algorythm of playing poker game and changing rules.
+        /// </summary>
         public void PlayGame()
         {
             PrepareConsole();
@@ -43,6 +50,9 @@ namespace MainGameProject.Game
             } while (Console.ReadLine().ToUpper() == "Y");
         }
 
+        /// <summary>
+        /// Sets up the console for gameplay
+        /// </summary>
         private void PrepareConsole()
         {
             Console.SetWindowSize(90, 51);
@@ -59,6 +69,10 @@ namespace MainGameProject.Game
             Console.Clear();
         }
 
+        /// <summary>
+        /// Inicializes onscreen menu for choosing the next game strategy.
+        /// </summary>
+        /// <returns></returns>
         private IGameStrategy GameSelection()
         {
             Console.WriteLine("What type of Poker Do You Want to play?\n" +
@@ -81,6 +95,9 @@ namespace MainGameProject.Game
             return null;
         }
 
+        /// <summary>
+        /// Resets the game to prepare it for new game.
+        /// </summary>
         private void ResetGame()
         {
             _strategy.ResetStrategy();
